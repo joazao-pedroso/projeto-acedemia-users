@@ -40,12 +40,14 @@ export default function Home() {
                 <div className="mb-4 text-center">
                   <h2 className="text-2xl font-bold text-green-600">Usuário Liberado!</h2>
                   <p className="mt-2 text-lg text-black">Nome: {user.nome}</p>
+                  <img src={user.imagem_url} alt="" />
                   <p className="mt-2 text-lg text-gray-700">Tenha um ótimo treino!</p>
                 </div>
               ) : (
                 <div className="mb-4 text-center">
                   <h2 className="text-2xl font-bold text-red-600">Usuário Bloqueado!</h2>
                   <p className="mt-2 text-lg text-black">Nome: {user.nome}</p>
+                  <img src={user.imagem_url} alt="" />
                   <p className="mt-2 text-lg text-gray-700">Por favor diriga-se na secretaria!</p>
                 </div>
               )
