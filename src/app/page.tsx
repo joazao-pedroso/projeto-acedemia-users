@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+
 export default function Home() {
   const [cpf, setCPF] = useState('')
   const [notFound, setNotFound] = useState(false)
@@ -26,48 +27,75 @@ export default function Home() {
     setUser(data)
 
     setTimeout(() => {
-      
       setUser(null)
     }, 2000)
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 w-full items-center justify-center">
-      <div className="h-[95%] py-10 shadow-2xl rounded-2xl bg-white w-[90%] flex items-center justify-center">
+    <div className="flex h-screen bg-black w-full items-center justify-center text-white">
+      <div className="h-[95%] py-10 shadow-2xl rounded-2xl bg-[#0d0d0d] border border-[#2a2a2a] w-[90%] flex items-center justify-center">
         <div className="lg:w-[50%] md:w-[75%] h-[95%] w-[75%] justify-center items-center flex flex-col">
-          {user ? (
-              user.status ? (
-                <div className="mb-4 text-center">
-                  <h2 className="text-2xl font-bold text-green-600">Usuário Liberado!</h2>
-                  <p className="mt-2 text-lg text-black">Nome: {user.nome}</p>
-                  <img src={user.imagem_url} alt="" />
-                  <p className="mt-2 text-lg text-gray-700">Tenha um ótimo treino!</p>
-                </div>
-              ) : (
-                <div className="mb-4 text-center">
-                  <h2 className="text-2xl font-bold text-red-600">Usuário Bloqueado!</h2>
-                  <p className="mt-2 text-lg text-black">Nome: {user.nome}</p>
-                  <img src={user.imagem_url} alt="" />
-                  <p className="mt-2 text-lg text-gray-700">Por favor diriga-se na secretaria!</p>
-                </div>
-              )
-           
-          ) : notFound == true ? (
-            <div className="mb-4 text-center">
-              <h2 className="text-2xl font-bold text-red-600">Usuário não Encontrado!</h2>
-              <p className="mt-2 text-lg text-black">Verifique o CPF digitado.</p>
-              <p className="mt-2 text-lg text-gray-700">Não tem cadastro? procure na secretaria!</p>
 
+          {user ? (
+            user.status ? (
+              <div className="mb-4 text-center flex flex-col items-center gap-4">
+              <h2 className="text-4xl text-lime-500">Acesso Liberado</h2>
+            
+              <div className="  rounded-xl shadow-lg p-6 w-full max-w-md">
+                <div className="flex flex-col items-center gap-3">
+                  <img
+                    src={user.imagem_url}
+                    alt={`Foto de ${user.nome}`}
+                    className="w-40 h-40 object-cover rounded-full border-2 border-lime-500 shadow-lg"
+                  />
+                  <div className="text-white text-lg font-medium">
+                    <p><span className="font-semibold text-gray-400">Nome:</span> {user.nome}</p>
+                    <p><span className="font-semibold text-gray-400">CPF:</span> {user.cpf}</p>
+                  </div>
+                </div>
+                <p className="mt-6 text-center text-gray-400 text-base italic">Tenha um ótimo treino!</p>
+              </div>
             </div>
+            ) : (
+              <div className="mb-4 text-center flex flex-col items-center gap-4">
+              <h2 className="text-4xl text-red-500">Acesso Negado</h2>
+             <div className=" rounded-xl shadow-lg p-6 w-full max-w-md">
+                <div className="flex flex-col items-center gap-3">
+                  <img
+                    src={user.imagem_url}
+                    alt={`Foto de ${user.nome}`}
+                    className="w-40 h-40 object-cover rounded-full border-2 border-red-500 shadow-lg"
+                  />
+                  <div className="text-white text-lg font-medium">
+                    <p><span className="font-semibold text-gray-400">Nome:</span> {user.nome}</p>
+                  </div>
+                </div>
+                <p className="mt-6 text-center text-gray-400 text-base italic">Dirija-se à secretaria para mais informações.</p>
+              </div>
+            </div>
+            )
+          ) : notFound === true ? (
+            <div className="mb-4 text-center flex flex-col items-center gap-4">
+            <h2 className="text-4xl text-yellow-400">Usuário Não Encontrado</h2>
+              <div className="  rounded-xl shadow-lg p-6 w-full max-w-md">
+              <div className="text-white text-lg font-medium space-y-2">
+                <p>Verifique o CPF digitado.</p>
+                <p className="text-gray-400 italic">Não tem cadastro? Procure a secretaria!</p>
+              </div>
+            </div>
+          </div>
           ) : (
             <>
-              <div className="input-text w-[75%] h-[20%]">
+              <h1 className="text-3xl mb-10">Bem vindo a Pulse Fit!</h1>
+              <div className="mb-5 input-text w-[70%] h-[20%]">
                 <input
                   type="number"
                   placeholder="CPF"
                   value={cpf}
+                  required
+                  max={11}
                   onChange={(e) => setCPF(e.target.value)}
-                  className="focus:outline-none focus:border-none w-full focus:ring-2 focus:ring-blue-800 text-xl border-2 text-blue-500 border-blue-500 text-center rounded h-15 lg:h-10"
+                  className="w-full p-2 text-xl rounded-xl border h-12  border-gray-200 bg-transparet text-gray-200 placeholder-gray-400"
                 />
               </div>
 
@@ -79,26 +107,26 @@ export default function Home() {
                       type="button"
                       value={i}
                       onClick={() => setCPF(cpf + i)}
-                      className="border-2 cursor-pointer text-xl bg-blue-500 border-blue-500 hover:bg-transparent hover:text-blue-500 rounded w-12 h-12 md:w-18 md:h-18 lg:w-18 lg:h-18"
+                      className="border-2 hover:border-gray-500 cursor-pointer text-xl bg-transparent hover:bg-transparent text-gray-200 hover:text-gray-500 border-gray-200  rounded-[50%] w-12 h-12 md:w-20 md:h-20 lg:w-18 lg:h-18"
                     />
                   ))}
                 </div>
-
-                <div className="inputs-confirm items-center justify-around flex w-full h-[15%]">
+                  
+                <div className="mt-10 xl:mt-0 inputs-confirm items-center justify-around flex w-full h-[15%]">
                   <input
                     type="button"
                     value="Validar"
                     onClick={handleValidateCPF}
-                    className="hover:text-green-500 hover:bg-transparent transition-all cursor-pointer w-[45%] h-[75%] bg-green-500 border-green-500 border-2 rounded-md"
+                    className="hover:text-white hover:bg-lime-600 cursor-pointer w-[45%] h-[70%] bg-transparent border-lime-600 border-2 rounded-xl text-lime-600"
                   />
                   <input
                     type="button"
                     value="Limpar"
                     onClick={() => setCPF('')}
-                    className="hover:text-red-500 hover:bg-transparent transition-all cursor-pointer w-[45%] h-[75%] bg-red-500 border-red-500 border-2 rounded-md"
+                    className="text-red-500 bg-transparent transition-all cursor-pointer w-[45%] h-[70%] hover:bg-red-600 border-red-500 border-2 rounded-xl hover:text-white"
                   />
                 </div>
-                  </div>
+              </div>
             </>
           )}
         </div>
