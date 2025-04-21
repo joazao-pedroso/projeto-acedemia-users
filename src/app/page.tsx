@@ -2,7 +2,13 @@
 
 import { useState } from "react"
 import { Delete } from 'lucide-react'
-
+interface User {
+  id: number
+  nome: string
+  imagem_url: string
+  status: boolean
+  cpf: string
+}
 export default function Home() {
   const [cpf, setCPF] = useState('')
   const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,11 +25,10 @@ export default function Home() {
   }
   
   const [notFound, setNotFound] = useState(false)
-  const [user, setUser] = useState<any>(null)
-
+  const [user, setUser] = useState<User | null>(null);
   const handleValidateCPF = async () => {
     setNotFound(false)
-    let response = await fetch(`https://api-academia-alpha.vercel.app/gym/user/cpf/${cpf}`)
+    const response = await fetch(`https://api-academia-alpha.vercel.app/gym/user/cpf/${cpf}`)
     if (!response.ok) {
       if (response.status === 404) {
         setUser(null)
@@ -36,10 +41,8 @@ export default function Home() {
       }
       return
     }
-    const handleBackspace = () => {
-      setCPF((prev) => prev.slice(0, -1));
-    };
-    let data = await response.json()
+
+    const data = await response.json()
     setUser(data)
 
     setTimeout(() => {
