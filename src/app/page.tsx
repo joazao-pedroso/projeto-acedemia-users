@@ -1,9 +1,23 @@
 'use client'
 
-import { useState } from "react";
+import { useState } from "react"
+import { Delete } from 'lucide-react'
 
 export default function Home() {
   const [cpf, setCPF] = useState('')
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '')
+    if (raw.length <= 11) {
+      const formatted = raw
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  
+      e.target.value = formatted;
+      setCPF(raw)
+    }
+  }
+  
   const [notFound, setNotFound] = useState(false)
   const [user, setUser] = useState<any>(null)
 
@@ -22,7 +36,9 @@ export default function Home() {
       }
       return
     }
-
+    const handleBackspace = () => {
+      setCPF((prev) => prev.slice(0, -1));
+    };
     let data = await response.json()
     setUser(data)
 
@@ -32,7 +48,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen bg-black w-full items-center justify-center text-white">
+    <div className="flex  h-screen bg-black w-full items-center justify-center text-white">
       <div className="h-[95%] py-10 shadow-2xl rounded-2xl bg-[#0d0d0d] border border-[#2a2a2a] w-[90%] flex items-center justify-center">
         <div className="lg:w-[50%] md:w-[75%] h-[95%] w-[75%] justify-center items-center flex flex-col">
 
@@ -86,48 +102,60 @@ export default function Home() {
           </div>
           ) : (
             <>
-              <h1 className="text-3xl mb-10">Bem vindo a Pulse Fit!</h1>
-              <div className="mb-5 input-text w-[70%] h-[20%]">
+            <h1 className="text-3xl mb-10 text-center text-white">Bem vindo a Pulse Fit!</h1>
+          
+            <div className="mb-5 input-text w-[70%] h-[20%]">
+              <input
+                type="text"
+                max={11}
+                placeholder="CPF"
+                value={cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2')}
+                required
+                onChange={handleCPFChange}
+                className="w-full text-center p-2 text-xl rounded-xl border h-12 border-gray-500 bg-transparent text-gray-200 placeholder-gray-400 
+                           transition duration-300 focus:outline-none focus:ring-2 focus:ring-lime-500 hover:border-lime-500"
+              />
+            </div>
+          
+            <div className="inputs w-[75%] h-[90%] flex flex-col">
+              <div className="button-number flex flex-wrap gap-4 items-center justify-center w-full h-[50%] mb-15">
+                {[...Array(10)].map((_, i) => (
+                  <input
+                    key={i}
+                    type="button"
+                    value={i}
+                    onClick={() => setCPF(cpf + i)}
+                    className="border-2 cursor-pointer text-xl text-gray-200 border-gray-500 bg-transparent rounded-full 
+                               w-12 h-12 md:w-20 md:h-20 transition duration-300 
+                               hover:bg-lime-600 hover:text-white hover:border-lime-600 hover:shadow-lg hover:shadow-lime-500/30"
+                  />
+                ))}
+              <button
+                  onClick={() => setCPF((prev) => prev.slice(0, -1))}
+                  className="border-2 cursor-pointer text-xl border-red-500 text-red-500 bg-transparent rounded-full w-12 h-12 md:w-20 md:h-20 flex items-center justify-center transition duration-30 hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-lg hover:shadow-red-400/30">
+                  <Delete size={24} />
+              </button>
+              </div>
+          
+              <div className="mt-10 xl:mt-15 inputs-confirm items-center justify-around flex w-full h-[15%]">
                 <input
-                  type="number"
-                  placeholder="CPF"
-                  value={cpf}
-                  required
-                  max={11}
-                  onChange={(e) => setCPF(e.target.value)}
-                  className="w-full p-2 text-xl rounded-xl border h-12  border-gray-200 bg-transparet text-gray-200 placeholder-gray-400"
+                  type="button"
+                  value="Validar"
+                  onClick={handleValidateCPF}
+                  className="cursor-pointer w-[45%] h-[70%] bg-transparent border-2 border-lime-600 rounded-xl text-lime-600 
+                             transition duration-300 hover:bg-lime-600 hover:text-white hover:shadow-lg hover:shadow-lime-500/30"
+                />
+                <input
+                  type="button"
+                  value="Limpar"
+                  onClick={() => setCPF('')}
+                  className="cursor-pointer w-[45%] h-[70%] bg-transparent border-2 border-red-500 rounded-xl text-red-500 
+                             transition duration-300 hover:bg-red-600 hover:text-white hover:shadow-lg hover:shadow-red-500/30"
                 />
               </div>
-
-              <div className="inputs w-[75%] h-[90%] flex flex-col">
-                <div className="button-number flex flex-wrap gap-4 items-center justify-center w-full h-[50%] mb-15">
-                  {[...Array(10)].map((_, i) => (
-                    <input
-                      key={i}
-                      type="button"
-                      value={i}
-                      onClick={() => setCPF(cpf + i)}
-                      className="border-2 hover:border-gray-500 cursor-pointer text-xl bg-transparent hover:bg-transparent text-gray-200 hover:text-gray-500 border-gray-200  rounded-[50%] w-12 h-12 md:w-20 md:h-20 lg:w-18 lg:h-18"
-                    />
-                  ))}
-                </div>
-                  
-                <div className="mt-10 xl:mt-0 inputs-confirm items-center justify-around flex w-full h-[15%]">
-                  <input
-                    type="button"
-                    value="Validar"
-                    onClick={handleValidateCPF}
-                    className="hover:text-white hover:bg-lime-600 cursor-pointer w-[45%] h-[70%] bg-transparent border-lime-600 border-2 rounded-xl text-lime-600"
-                  />
-                  <input
-                    type="button"
-                    value="Limpar"
-                    onClick={() => setCPF('')}
-                    className="text-red-500 bg-transparent transition-all cursor-pointer w-[45%] h-[70%] hover:bg-red-600 border-red-500 border-2 rounded-xl hover:text-white"
-                  />
-                </div>
-              </div>
-            </>
+            </div>
+          </>
+          
           )}
         </div>
       </div>
