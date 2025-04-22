@@ -134,8 +134,9 @@ export default function Home() {
                     type="button"
                     value={i}
                     onClick={() => setCPF(cpf + i)}
+                    disabled={cpf.length >= 11 ? true : false}  
                     className="border-2 cursor-pointer text-xl text-gray-200 border-gray-500 bg-transparent rounded-full 
-                               w-12 h-12 md:w-20 md:h-20 transition duration-300 
+                               w-12 h-12 md:w-20 md:h-20 transition duration-300 disabled:bg-gray-900
                                hover:bg-lime-600 hover:text-white hover:border-lime-600 hover:shadow-lg hover:shadow-lime-500/30"
                   />
                 ))}
