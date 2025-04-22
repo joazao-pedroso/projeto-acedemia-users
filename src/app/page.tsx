@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { useState } from "react"
 import { Delete } from 'lucide-react'
 interface User {
@@ -29,13 +29,14 @@ export default function Home() {
   const handleValidateCPF = async () => {
     setNotFound(false)
     const response = await fetch(`https://api-academia-alpha.vercel.app/gym/user/cpf/${cpf}`)
+    setCPF('')
     if (!response.ok) {
       if (response.status === 404) {
         setUser(null)
         setNotFound(true)
         setTimeout(() => {
           setNotFound(false)
-        }, 2000)
+        }, 5000)
       } else {
         console.log(`Erro ${response.status}: ${response.statusText}`)
       }
@@ -62,10 +63,12 @@ export default function Home() {
             
               <div className="  rounded-xl shadow-lg p-6 w-full max-w-md">
                 <div className="flex flex-col items-center gap-3">
-                  <img
+                  <Image
                     src={user.imagem_url}
                     alt={`Foto de ${user.nome}`}
-                    className="w-40 h-40 object-cover rounded-full border-2 border-lime-500 shadow-lg"
+                    width={1000}
+                    height={1000}
+                    className="w-50 h-50 object-cover rounded-full border-2 border-lime-500 shadow-lg"
                   />
                   <div className="text-white text-lg font-medium">
                     <p><span className="font-semibold text-gray-400">Nome:</span> {user.nome}</p>
@@ -80,10 +83,12 @@ export default function Home() {
               <h2 className="text-4xl text-red-500">Acesso Negado</h2>
              <div className=" rounded-xl shadow-lg p-6 w-full max-w-md">
                 <div className="flex flex-col items-center gap-3">
-                  <img
+                  <Image
                     src={user.imagem_url}
                     alt={`Foto de ${user.nome}`}
-                    className="w-40 h-40 object-cover rounded-full border-2 border-red-500 shadow-lg"
+                    width={1000}
+                    height={1000}
+                    className="w-50 h-50 object-cover rounded-full border-2 border-red-500 shadow-lg"
                   />
                   <div className="text-white text-lg font-medium">
                     <p><span className="font-semibold text-gray-400">Nome:</span> {user.nome}</p>
@@ -110,6 +115,7 @@ export default function Home() {
             <div className="mb-5 input-text w-[70%] h-[20%]">
               <input
                 type="text"
+                disabled={true}
                 max={11}
                 placeholder="CPF"
                 value={cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2')}
