@@ -138,13 +138,13 @@ export default function Home() {
                     onClick={() => setCPF(cpf + i)}
                     disabled={cpf.length >= 11 ? true : false}  
                     className="border-2 cursor-pointer text-xl text-gray-200 border-gray-500 bg-transparent rounded-full 
-                               w-12 h-12 md:w-20 md:h-20 transition duration-300 disabled:bg-gray-900
+                               w-12 h-12 md:w-25 md:h-25 xl:h-20 xl:w-20 transition duration-300 disabled:bg-gray-900
                                hover:bg-lime-600 hover:text-white hover:border-lime-600 hover:shadow-lg hover:shadow-lime-500/30"
                   />
                 ))}
               <button
                   onClick={() => setCPF((prev) => prev.slice(0, -1))}
-                  className="border-2 cursor-pointer text-xl border-red-500 text-red-500 bg-transparent rounded-full w-12 h-12 md:w-20 md:h-20 flex items-center justify-center transition duration-30 hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-lg hover:shadow-red-400/30">
+                  className="border-2 cursor-pointer text-xl border-red-500 text-red-500 bg-transparent rounded-full w-12 h-12 md:w-25 md:h-25 xl:h-20 xl:w-20  flex items-center justify-center transition duration-30 hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-lg hover:shadow-red-400/30">
                   <Delete size={24} />
               </button>
               </div>
