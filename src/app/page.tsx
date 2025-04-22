@@ -8,6 +8,7 @@ interface User {
   imagem_url: string
   status: boolean
   cpf: string
+  telefone: number
 }
 export default function Home() {
   const [cpf, setCPF] = useState('')
@@ -73,6 +74,7 @@ export default function Home() {
                   <div className="text-white text-lg font-medium">
                     <p><span className="font-semibold text-gray-400">Nome:</span> {user.nome}</p>
                     <p><span className="font-semibold text-gray-400">CPF:</span> {user.cpf}</p>
+                    <p><span className="font-semibold text-gray-400">Telefone:</span> {user.telefone}</p>
                   </div>
                 </div>
                 <p className="mt-6 text-center text-gray-400 text-base italic">Tenha um ótimo treino!</p>
