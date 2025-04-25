@@ -81,7 +81,7 @@ Este projeto consome a seguinte API para validação de CPF:
 ```
 GET https://api-academia-alpha.vercel.app/gym/user/cpf/{cpf}
 ```
-API feita por Pedro Vitor:
+API feita por [Pedro Vitor](https://github.com/Pedro-Vitor-Ribeiro-Silva):
 [Repositório da API](https://github.com/Pedro-Vitor-Ribeiro-Silva/API_ACADEMIA) 
 ---
 
