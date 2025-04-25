@@ -102,4 +102,4 @@ Sinta-se à vontade para abrir uma issue ou enviar um pull request! 💬
 
 ## 📄 Licença
 
-MIT License. © [João Pedro]([https://github.com/Pedro-Vitor-Ribeiro-Silva](https://github.com/joazao-pedroso))
+MIT License. © [João Pedro](https://github.com/joazao-pedroso)
